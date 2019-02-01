@@ -12,6 +12,7 @@ if sys.version_info[0] < 3 :
 else:
 	from socketserver import ThreadingMixIn, TCPServer, StreamRequestHandler
 
+import ssl
 
 
 
@@ -96,9 +97,12 @@ class WebsocketServer(ThreadingMixIn, TCPServer, API):
 	clients=[]
 	id_counter=0
 
-	def __init__(self, port, host='capnflint.com'):
+	def __init__(self, port, host='www.capnflint.com'):
 		self.port=port
 		TCPServer.__init__(self, (host, port), WebSocketHandler)
+		key_file = "/etc/certbot/live/www.capnflint.com/privkey.pem"
+		cert_file = "/etc/certbot/live/www.capnflint.com/fullchain.pem"
+		self.socket = ssl.wrap_socket(self.socket, keyfile=key_file, certfile=cert_file, cert_reqs=ssl.CERT_NONE)
 
 	def _message_received_(self, handler, msg):
 		self.message_received(self.handler_to_client(handler), self, msg)
