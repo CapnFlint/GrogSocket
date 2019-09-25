@@ -1,2 +1,2 @@
 sudo docker build -t grogsocket .
-sudo docker run --rm -it -p 9001:9001 -v /var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock -v $(sudo readlink -f /etc/letsencrypt/live/www.capnflint.com/privkey.pem):certs/privkey.pem:ro -v $(sudo readlink -f /etc/letsencrypt/live/www.capnflint.com/fullchain.pem):certs/fullchain.pem:ro --name grogsocket grogsocket
+sudo docker run --rm -dit -p 9001:9001 -v /var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock -v $(sudo readlink -f /etc/letsencrypt/live/www.capnflint.com/privkey.pem):/app/certs/privkey.pem:ro -v $(sudo readlink -f /etc/letsencrypt/live/www.capnflint.com/fullchain.pem):/app/certs/fullchain.pem:ro --name grogsocket grogsocket
