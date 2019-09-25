@@ -100,8 +100,8 @@ class WebsocketServer(ThreadingMixIn, TCPServer, API):
 	def __init__(self, port, host='www.capnflint.com'):
 		self.port=port
 		TCPServer.__init__(self, (host, port), WebSocketHandler)
-		key_file = "certs/privkey.pem"
-		cert_file = "certs/fullchain.pem"
+		key_file = "certs/privkey1.pem"
+		cert_file = "certs/fullchain1.pem"
 		self.socket = ssl.wrap_socket(self.socket, keyfile=key_file, certfile=cert_file, cert_reqs=ssl.CERT_NONE)
 
 	def _message_received_(self, handler, msg):
