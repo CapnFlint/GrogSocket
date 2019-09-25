@@ -16,4 +16,4 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 9001
 
 # Run app.py when the container launches
-ENTRYPOINT ["python", "server.py"]
+CMD ["python", "server.py"]
