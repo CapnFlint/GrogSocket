@@ -4,16 +4,13 @@ import re
 
 from config import ws_config
 
-valid_clients = ['205.250.51.208','142.4.208.99','72.213.52.229','71.197.181.249','74.87.206.164','174.66.179.120','67.244.138.127','24.52.46.130','5.196.23.89','174.127.238.136','166.137.98.85']
-skip_security = True
 
 def register_client(client, key):
 	try:
-		con = mdb.connect(ws_config['db']['addr'],ws_config['db']['user'], ws_config['db']['pass'], ws_config['db']['db'])
-		with con:
-			cur = con.cursor(mdb.cursors.DictCursor)
-			cur.execute("SELECT user, secret FROM tokens WHERE token = %s",(key,))
-			result = cur.fetchone()
+		con = mdb.connect(host=ws_config['db']['addr'],user=ws_config['db']['user'], passwd=ws_config['db']['pass'], db=ws_config['db']['db'])
+		cur = con.cursor(mdb.cursors.DictCursor)
+		cur.execute("SELECT user, secret FROM tokens WHERE token = %s",(key,))
+		result = cur.fetchone()
 	except mdb.Error, e:
 		print "Error %d: %s" % (e.args[0], e.args[1])
 		return None
@@ -62,7 +59,6 @@ def client_left(client, server):
 
 # Called when a client sends a message
 def message_received(client, server, message):
-	global valid_clients
 	# Check for a REGISTER message
 	#TODO: make the match stricter to enforce format
 	print("Received: [" + message + "]")
