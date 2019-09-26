@@ -27,10 +27,9 @@ def register_server(client, secret):
 	print "Registering Server (" + secret + ")"
         try:
                 con = mdb.connect(ws_config['db']['addr'],ws_config['db']['user'], ws_config['db']['pass'], ws_config['db']['db'])
-                with con:
-                        cur = con.cursor(mdb.cursors.DictCursor)
-                        cur.execute("SELECT user, secret FROM tokens WHERE secret = %s",(secret,))
-                        result = cur.fetchone()
+                cur = con.cursor(mdb.cursors.DictCursor)
+                cur.execute("SELECT user, secret FROM tokens WHERE secret = %s",(secret,))
+                result = cur.fetchone()
         except mdb.Error, e:
                 print "Error %d: %s" % (e.args[0], e.args[1])
                 return None
